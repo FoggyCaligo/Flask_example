@@ -16,7 +16,6 @@ class Database:
             self.connection = pymysql.connect(
                 #host='localhost',
                 host = 'mariadb',
-                port=3306
                 # host='svc.sel5.cloudtype.app',
                 # port=31484,
                 database='test',  # test 데이터베이스 사용
