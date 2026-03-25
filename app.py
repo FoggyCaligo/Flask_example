@@ -12,7 +12,7 @@ atexit.register(db.close)
 
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('template/index.html')
+    return render_template('index.html')
 
 @app.route('/calculate', methods=['POST'])
 def calculate():
@@ -22,7 +22,7 @@ def calculate():
         
         # 입력값 유효성 검사
         if weight <= 0 or height <= 0:
-            return render_template('template/index.html', error="체중과 신장은 양수여야 합니다.")
+            return render_template('index.html', error="체중과 신장은 양수여야 합니다.")
         
         # BMI 계산
         calculator = BMICalculator(weight, height)
@@ -31,19 +31,19 @@ def calculate():
         # 데이터베이스에 저장
         db.save_bmi_record(weight, height, result["bmi"], result["category"])
         
-        return render_template('template/result.html', 
+        return render_template('result.html', 
                               bmi=result["bmi"], 
                               category=result["category"],
                               weight=weight,
                               height=height)
     except ValueError:
-        return render_template('template/index.html', error="유효한 숫자를 입력해주세요.")
+        return render_template('index.html', error="유효한 숫자를 입력해주세요.")
 
 @app.route('/history')
 def history():
     # 최근 BMI 기록 10개 가져오기
     records = db.get_bmi_records(10)
-    return render_template('template/history.html', records=records)
+    return render_template('history.html', records=records)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
