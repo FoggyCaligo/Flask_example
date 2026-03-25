@@ -1,19 +1,17 @@
 from flask import Flask
-from routes import main_routes as route
-from models.db import Database
+from routes.main_routes import mainBp
 
-import atexit   # 애플리케이션 종료시 실행을 요청 (ex. DB연결 종료)
+def create_app():
+    app = Flask(__name__)
 
-app = Flask(__name__)
-db = Database()
-atexit.register(db.close)
+    app.register_blueprint(mainBp)
 
-app.register_blueprint(route.homeBp)
-app.register_blueprint(route.historyBp)
+    return app
+
+app = create_app()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
-
 
 
 
