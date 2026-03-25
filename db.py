@@ -1,17 +1,24 @@
 import pymysql
 from pymysql import Error
+import os
+from dotenv import load_dotenv
 
+
+load_dotenv()
+DB_USER = os.getenv('DB_USER')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+DB_HOST = os.getenv('DB_HOST')
+DB_NAME = os.getenv('DB_NAME')
 class Database:
     def __init__(self):
         self.connection = None
         try:
             self.connection = pymysql.connect(
-                host='localhost',
-                # host='mariadb',  # cloudtype 사용 시
-                # port=3306,   # cloudtype 사용 시
+                host=os.environ.get('DB_HOST'),  # cloudtype 사용 시
+                port=int(os.environ.get('DB_PORT')),   # cloudtype 사용 시
                 database='test',  # test 데이터베이스 사용
                 user='root',
-                password='dksro'.encode('utf-8'),  # mariadb 설치 당시의 패스워드, 실제 환경에서는 보안을 위해 환경변수 등을 사용
+                password=os.environ.get('DB_PASSWORD'),  # mariadb 설치 당시의 패스워드, 실제 환경에서는 보안을 위해 환경변수 등을 사용
                 charset='utf8mb4',
                 cursorclass=pymysql.cursors.DictCursor   # 쿼리 결과를 딕셔너리로 변환
             )
@@ -25,6 +32,8 @@ class Database:
             if self.connection is None:
                 print("데이터베이스 연결이 없습니다.")
                 return False
+
+
                 
             with self.connection.cursor() as cursor:
                 query = """
