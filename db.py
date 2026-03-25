@@ -14,13 +14,10 @@ class Database:
         self.connection = None
         try:
             self.connection = pymysql.connect(
-                #host='localhost',
-                host = 'mariadb',
-                # host='svc.sel5.cloudtype.app',
-                # port=31484,
-                database='test',  # test 데이터베이스 사용
-                user='root',
-                password='dksro',  # mariadb 설치 당시의 패스워드, 실제 환경에서는 보안을 위해 환경변수 등을 사용
+                host=DB_HOST,
+                database=DB_NAME,
+                user=DB_USER,
+                password=DB_PASSWORD,
                 charset='utf8mb4',
                 cursorclass=pymysql.cursors.DictCursor   # 쿼리 결과를 딕셔너리로 변환
             )
