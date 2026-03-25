@@ -12,7 +12,7 @@ atexit.register(db.close)
 
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('index.html')
+    return render_template('template/index.html')
 
 @app.route('/calculate', methods=['POST'])
 def calculate():
@@ -22,7 +22,7 @@ def calculate():
         
         # 입력값 유효성 검사
         if weight <= 0 or height <= 0:
-            return render_template('index.html', error="체중과 신장은 양수여야 합니다.")
+            return render_template('template/index.html', error="체중과 신장은 양수여야 합니다.")
         
         # BMI 계산
         calculator = BMICalculator(weight, height)
