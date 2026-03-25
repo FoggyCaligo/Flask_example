@@ -1,12 +1,22 @@
 import pymysql
 from pymysql import Error
+import os
+from dotenv import load_dotenv
 
+
+load_dotenv()
+DB_USER = os.getenv('DB_USER')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+DB_HOST = os.getenv('DB_HOST')
+DB_NAME = os.getenv('DB_NAME')
 class Database:
     def __init__(self):
         self.connection = None
         try:
             self.connection = pymysql.connect(
-                host='localhost',
+                #host='localhost',
+                host = 'mariadb',
+                port=3306
                 # host='svc.sel5.cloudtype.app',
                 # port=31484,
                 database='test',  # test 데이터베이스 사용
@@ -25,6 +35,8 @@ class Database:
             if self.connection is None:
                 print("데이터베이스 연결이 없습니다.")
                 return False
+
+
                 
             with self.connection.cursor() as cursor:
                 query = """
